@@ -1,11 +1,11 @@
-import Form from './Form';
+import CustomForm from './Form';
 
 import './App.scss';
 
 function App() {
 	return (
 		<div className="app">
-			<Form />
+			<CustomForm />
 		</div>
 	);
 }
