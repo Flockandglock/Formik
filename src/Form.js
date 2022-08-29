@@ -1,24 +1,21 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, useField } from 'formik';
 import * as Yup from 'yup';
 
 
-// const validate = values => {
-//     const errors = {};
+const MyTextInput = ({label, ...props}) => {
 
-//     if (!values.name) {
-//         errors.name = 'Обязательное поле'
-//     } else if(values.name.length < 2) {
-//         errors.name = 'Символов должно быть больше 2ух'
-//     }
+    const [filed, meta] = useField(props);
 
-//     if (!values.email) {
-//         errors.email = 'Обязательное поле'
-//     } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-//         errors.email = 'Неправильный email'
-//     }
-
-//     return errors;
-// };
+    return(
+        <>
+            <label htmlFor={props.name}>{label}</label>
+            <input {...props} {...filed} />
+            {meta.touched && meta.error ? (
+                <div className='error'>{meta.error}</div>
+            ) : null}
+        </>
+    )
+};
 
 const CustomForm = () => {
 
@@ -54,28 +51,25 @@ const CustomForm = () => {
             >
                 <Form className="form" >
                 <h2>Отправить пожертвование</h2>
-                <label htmlFor="name">Ваше имя</label>
-                <Field
-                    id="name"
-                    name="name"
-                    type="text"
-                    placeholder="Введите ваше имя"
+
+                <MyTextInput label='Ваше имя'
+                            id="name"
+                            name="name"
+                            type="text"
+                            placeholder="Введите ваше имя"
                 />
-                <ErrorMessage className='error' name='name' component='div' />
-                <label htmlFor="email">Ваша почта</label>
-                <Field
-                    id="email"
-                    name="email"
-                    type="email"
+                
+                <MyTextInput label='Ваша почта' 
+                             id="email"
+                             name="email"
+                             type="email"
                 />
-                <ErrorMessage className='error' name='email' component='div' />
-                <label htmlFor="amount">Количество</label>
-                <Field
-                    id="amount"
-                    name="amount"
-                    type="number"
+                
+                <MyTextInput label='Количество'
+                            id="amount"
+                            name="amount"
+                            type="number"
                 />
-                <ErrorMessage className='error' name='amount' component='div' />
                 <label htmlFor="currency">Валюта</label>
                 <Field
                     id="currency"
@@ -105,7 +99,7 @@ const CustomForm = () => {
             </Form>
        </Formik>
     )
-}
+};
 
 export default CustomForm;
 
